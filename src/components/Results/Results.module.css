@@ -1,0 +1,9 @@
+.wrap{margin-top:12px}
+.card{background:white;padding:12px;border-radius:10px}
+.row{display:flex;gap:16px;align-items:center}
+.label{font-size:0.85rem;color:var(--muted)}
+.score{font-size:2rem;color:white;padding:8px 14px;border-radius:10px;display:inline-block}
+.level{font-weight:700;font-size:1.1rem}
+.notes{margin-top:8px;color:var(--text)}
+
+@media(min-width:640px){.card{padding:16px}}

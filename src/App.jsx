@@ -1,35 +1,56 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import React, {useState} from 'react'
+import Header from './components/Header/Header'
+import CalcButtons from './components/Buttons/CalcButtons'
+import MEWSForm from './components/Forms/MEWSForm'
+import BradenForm from './components/Forms/BradenForm'
+import MorseForm from './components/Forms/MorseForm'
+import Results from './components/Results/Results'
+import assessPatient from './utils/assessments'
 import './App.css'
 
-function App() {
-  const [count, setCount] = useState(0)
+export default function App(){
+  const [selected,setSelected]=useState('mews')
+  const [result,setResult]=useState(null)
+
+  function handleSelect(key){
+    setSelected(key)
+    setResult(null)
+  }
+
+  function handleMewsSubmit(values){
+    const res = assessPatient({mews: values})
+    setResult(res)
+  }
+
+  function handleBradenSubmit(values){
+    const res = assessPatient({braden: values})
+    setResult(res)
+  }
+
+  function handleMorseSubmit(values){
+    const res = assessPatient({morse: values})
+    setResult(res)
+  }
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    <main className="container">
+      <Header />
+
+      <CalcButtons selected={selected} onSelect={handleSelect} />
+
+      {selected==='mews' && <MEWSForm onSubmit={handleMewsSubmit} />}
+      {selected==='braden' && <BradenForm onSubmit={handleBradenSubmit} />}
+      {selected==='morse' && <MorseForm onSubmit={handleMorseSubmit} />}
+
+      {result && selected === 'mews' && (
+        <Results score={result.score_mews} level={result.classificacao_mews} diagnostico={result.diagnostico_mews} orientacoes={result.orientacoes_mews} />
+      )}
+      {result && selected === 'braden' && (
+        <Results score={result.score_braden} level={result.classificacao_braden} diagnostico={result.diagnostico_braden} orientacoes={result.orientacoes_braden} />
+      )}
+      {result && selected === 'morse' && (
+        <Results score={result.score_morse} level={result.classificacao_morse} diagnostico={result.diagnostico_morse} orientacoes={result.orientacoes_morse} />
+      )}
+    </main>
   )
 }
-
-export default App
