@@ -5,6 +5,7 @@ import MEWSForm from './components/Forms/MEWSForm'
 import BradenForm from './components/Forms/BradenForm'
 import MorseForm from './components/Forms/MorseForm'
 import Results from './components/Results/Results'
+import Modal from './components/Modal/Modal'
 import assessPatient from './utils/assessments'
 import './App.css'
 
@@ -33,23 +34,36 @@ export default function App(){
   }
 
   return (
-    <main className="container">
-      <Header />
+    <main className="container app-grid">
+      <div>
+        <Header />
+        <div className="card" style={{marginTop:12}}>
+          <div className="header-area">
+            <div style={{flex:1}}>
+              <CalcButtons selected={selected} onSelect={handleSelect} />
+            </div>
+          </div>
 
-      <CalcButtons selected={selected} onSelect={handleSelect} />
+          <div style={{marginTop:12}}>
+            {selected==='mews' && <MEWSForm onSubmit={handleMewsSubmit} />}
+            {selected==='braden' && <BradenForm onSubmit={handleBradenSubmit} />}
+            {selected==='morse' && <MorseForm onSubmit={handleMorseSubmit} />}
+          </div>
+        </div>
+      </div>
 
-      {selected==='mews' && <MEWSForm onSubmit={handleMewsSubmit} />}
-      {selected==='braden' && <BradenForm onSubmit={handleBradenSubmit} />}
-      {selected==='morse' && <MorseForm onSubmit={handleMorseSubmit} />}
-
-      {result && selected === 'mews' && (
-        <Results score={result.score_mews} level={result.classificacao_mews} diagnostico={result.diagnostico_mews} orientacoes={result.orientacoes_mews} />
-      )}
-      {result && selected === 'braden' && (
-        <Results score={result.score_braden} level={result.classificacao_braden} diagnostico={result.diagnostico_braden} orientacoes={result.orientacoes_braden} />
-      )}
-      {result && selected === 'morse' && (
-        <Results score={result.score_morse} level={result.classificacao_morse} diagnostico={result.diagnostico_morse} orientacoes={result.orientacoes_morse} />
+      {result && (
+        <Modal onClose={() => setResult(null)} title="Resultado da Avaliação">
+          {selected === 'mews' && (
+            <Results score={result.score_mews} level={result.classificacao_mews} diagnostico={result.diagnostico_mews} orientacoes={result.orientacoes_mews} />
+          )}
+          {selected === 'braden' && (
+            <Results score={result.score_braden} level={result.classificacao_braden} diagnostico={result.diagnostico_braden} orientacoes={result.orientacoes_braden} />
+          )}
+          {selected === 'morse' && (
+            <Results score={result.score_morse} level={result.classificacao_morse} diagnostico={result.diagnostico_morse} orientacoes={result.orientacoes_morse} />
+          )}
+        </Modal>
       )}
     </main>
   )
