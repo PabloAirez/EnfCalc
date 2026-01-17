@@ -1,16 +1,66 @@
-# React + Vite
+# EnfCalc
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+EnfCalc is a small nursing support web app (React + Vite) that calculates three common clinical scores used in inpatient settings:
 
-Currently, two official plugins are available:
+- MEWS (Modified Early Warning Score) — physiological early warning score for clinical deterioration.
+- Braden Scale — predicts pressure ulcer risk based on sensory perception, moisture, activity, mobility, nutrition and friction/shear.
+- Morse Fall Scale — assesses fall risk.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Run locally
 
-## React Compiler
+1. Install dependencies
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+```
+npm install
+```
 
-## Expanding the ESLint configuration
+2. Start dev server
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+```
+npm run dev
+```
+
+Open http://localhost:5173 (or the port shown by Vite).
+
+## How it works
+
+- Each calculator has its own responsive form component under `src/components/Forms`.
+- Calculation logic lives in `src/utils/calculators.js` and clinical aggregation in `src/utils/assessments.js`.
+- Results show a risk level, recommended actions and a short diagnostic note in a modal.
+
+## Scales and scoring (summary)
+
+### MEWS (Modified Early Warning Score)
+Inputs: respiratory rate, oxygen saturation, supplemental oxygen (yes/no), systolic blood pressure, heart rate, temperature, level of consciousness (AVPU)
+
+Scoring: each parameter is scored 0–3 (see `src/utils/calculators.js` for exact thresholds). Scores sum to a total MEWS.
+
+Interpretation (defaults used in app):
+- 0–2: Low risk — continue routine monitoring.
+- 3–4: Medium risk — increase monitoring and notify nursing team.
+- 5+: High risk — escalate to rapid response / physician evaluation per local protocol.
+
+### Braden Scale
+Six subscales: Sensory perception, Moisture, Activity, Mobility, Nutrition, Friction & Shear.
+
+- Subscale scores: 1 (worst) to 4 (best) for most items; Friction & Shear is 1–3.
+- Total score range: 6–23.
+
+Interpretation (defaults used in app):
+- 15–18: Mild risk — implement preventative skin care.
+- 13–14: Moderate risk — increase preventive measures.
+- 10–12: High risk — intensive preventive care.
+- 6–9: Very high risk — aggressive prevention and specialist referral.
+
+See `src/utils/calculators.js` for exact scoring logic and `src/utils/assessments.js` for guidance text.
+
+### Morse Fall Scale
+Components: history of falling, secondary diagnosis, ambulatory aid, IV/heparin lock, gait, mental status. Points assigned per item and summed.
+
+Interpretation (defaults used in app):
+- 0–24: Low risk
+- 25–44: Moderate risk
+- 45+: High risk
+
+## Disclaimer
+This tool is educational and should not replace clinical judgment or local protocols. Validate thresholds and actions with institutional guidelines before clinical use.
