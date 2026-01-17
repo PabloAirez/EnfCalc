@@ -2,7 +2,7 @@
 .row{display:flex;gap:12px;flex-wrap:wrap}
 .field{flex:1;min-width:160px;display:flex;flex-direction:column;margin-bottom:12px}
 .label{font-size:0.92rem;color:var(--muted);margin-bottom:8px;font-weight:600}
-.input{padding:10px;border:1px solid rgba(38,50,56,0.06);border-radius:10px;background:#fff}
+.input{padding:10px;border:1px solid rgba(38,50,56,0.06);border-radius:10px;background:#fff;color:var(--text);-webkit-text-fill-color:var(--text)}
 .input[type="select"]{background:#fff}
 .error{color:var(--red);font-size:0.9rem;margin-top:6px}
 .submit{margin-top:10px;background:var(--green);color:white;border-color:transparent;padding:12px;border-radius:10px}

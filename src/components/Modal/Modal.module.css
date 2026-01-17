@@ -3,6 +3,7 @@
 .header{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;border-bottom:1px solid rgba(38,50,56,0.04)}
 .title{font-weight:700;color:var(--text)}
 .close{background:transparent;border:0;font-size:18px;cursor:pointer;padding:6px;border-radius:6px}
+.close{color:var(--text)}
 .close:hover{background:rgba(0,0,0,0.04)}
 .body{padding:16px}
 
