@@ -3,9 +3,10 @@ import styles from './Results.module.css'
 
 export default function Results({score,level,notes,diagnostico,orientacoes}){
   const color = level && (level.includes('Alto') || level === 'Alto')? 'var(--red)' : level && (level.includes('Moderado')|| level === 'Moderado')? 'var(--yellow)' : 'var(--green)'
+  const riskClass = level && (level.includes('Alto') || level === 'Alto')? styles['risk-high'] : level && (level.includes('Moderado')|| level === 'Moderado')? styles['risk-moderate'] : styles['risk-low']
   return (
     <section className={styles.wrap} aria-live="polite">
-      <div className={styles.card}>
+      <div className={`${styles.card} ${riskClass}`}>
         <div className={styles.row}>
           <div>
             <div className={styles.label}>Pontuação</div>

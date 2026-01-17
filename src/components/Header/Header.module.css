@@ -4,19 +4,28 @@
   border-radius: 12px;
   overflow: hidden;
   margin-bottom:16px;
+  display:flex;align-items:center;
 }
 .overlay{
-  background: linear-gradient(180deg, rgba(38,50,56,0.08), rgba(245,247,250,0.95));
-  padding: 28px 16px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.85), rgba(245,247,250,0.95));
+  padding: 20px 16px;
 }
 .title{
   color: var(--blue);
   margin: 0 0 8px 0;
+  font-size:1.6rem;
 }
 .desc{
   color: var(--text);
   margin: 0;
   max-width: 65ch;
+}
+
+.iconBox{width:56px;height:56px;border-radius:10px;background:rgba(30,136,229,0.08);display:flex;align-items:center;justify-content:center;margin-right:12px}
+
+@media(min-width:640px){
+  .overlay{padding:28px 24px}
+  .title{font-size:1.9rem}
 }
 
 @media(min-width:640px){
